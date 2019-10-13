@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="GmailMission" >
+  <test name="Regression suite 1" >
+  <parameter name="browser" value="chrome"></parameter>
+    <classes>
+      <class name="Muthu.Test.GmailFunctionality"/>
+      	<methods>
+      	<include name="Login"/>
+      	<include name="PostLogin"/>
+      	</methods>
+     </classes>
+ </test>
+</suite>

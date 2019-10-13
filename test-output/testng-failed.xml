@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [GmailMission]">
+  <test thread-count="5" name="Regression suite 1(failed)">
+    <parameter name="browser" value="chrome"/>
+    <classes>
+      <class name="Muthu.Test.GmailFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="PostLogin"/>
+          <include name="afterClass"/>
+        </methods>
+      </class> <!-- Muthu.Test.GmailFunctionality -->
+    </classes>
+  </test> <!-- Regression suite 1(failed) -->
+</suite> <!-- Failed suite [GmailMission] -->

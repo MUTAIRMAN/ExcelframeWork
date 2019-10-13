@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="GmailMission" duration-ms="41099" started-at="2019-10-13T04:16:05Z" finished-at="2019-10-13T04:16:46Z">
+    <groups>
+    </groups>
+    <test name="Regression suite 1" duration-ms="41099" started-at="2019-10-13T04:16:05Z" finished-at="2019-10-13T04:16:46Z">
+      <class name="Muthu.Test.GmailFunctionality">
+        <test-method status="PASS" signature="beforeClass(java.lang.String)[pri:0, instance:Muthu.Test.GmailFunctionality@464bee09]" name="beforeClass" is-config="true" duration-ms="11142" started-at="2019-10-13T04:16:05Z" finished-at="2019-10-13T04:16:16Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method status="PASS" signature="Login()[pri:0, instance:Muthu.Test.GmailFunctionality@464bee09]" name="Login" duration-ms="5298" started-at="2019-10-13T04:16:16Z" finished-at="2019-10-13T04:16:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Login -->
+        <test-method status="PASS" signature="PostLogin()[pri:0, instance:Muthu.Test.GmailFunctionality@464bee09]" name="PostLogin" duration-ms="23510" started-at="2019-10-13T04:16:22Z" depends-on-methods="Muthu.Test.GmailFunctionality.Login" finished-at="2019-10-13T04:16:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- PostLogin -->
+        <test-method status="PASS" signature="afterClass()[pri:0, instance:Muthu.Test.GmailFunctionality@464bee09]" name="afterClass" is-config="true" duration-ms="1113" started-at="2019-10-13T04:16:45Z" finished-at="2019-10-13T04:16:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterClass -->
+      </class> <!-- Muthu.Test.GmailFunctionality -->
+    </test> <!-- Regression suite 1 -->
+  </suite> <!-- GmailMission -->
+</testng-results>
