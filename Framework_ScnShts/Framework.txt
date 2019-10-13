@@ -1,0 +1,38 @@
+Frame work:
+
+	=>Excel Based OR which is versatile when it  comes to regression Maintenance(Supports both .xls and .xlsx versions)
+
+	=>Prequisite = For OR you should give only one property and the tool will pick up the value for u
+
+	=>Always Use this excelHandlerClass.getObj("obj_Name","Sheet_Name") 
+	
+		for e.g.:excelHandlerClass.getObj("obj_Name","Sheet_Name") instead for "By.name("......")"
+	
+	=>Variables for global level are declared in class initialVariable Class
+	
+	=>a common variable called waitdriver is initialized at the initial level of test with 20 seconds of time
+		
+	=>it supports CrossBrowser which can be given thru TestNG.xml
+
+
+**********************Test Data*************************
+
+	=>TestCase Name should be given along with corresponding Data in excel Sheet
+	
+	=>Used HashMap so that i  can with Column Names as key and data in the test case row as Value.
+
+	use <<hashMapData>> as 		hashMapData=excelHandlerClass.testDatahandler(excelHandlerClass.TCName());
+	hashMapData(".Col Name.")
+	
+********************Screenshot***************************
+	This Function will take sccreen shot each Testcase.
+
+
+********************Report*******************************
+	Reports with TestCase name along with its status will be printed, error messages will also be printed if any case fails
+	
+	
+
+
+
+
