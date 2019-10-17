@@ -35,12 +35,24 @@ import org.openqa.selenium.io.FileHandler;
 import org.testng.annotations.DataProvider;
 
 public class FrameworkClass extends initialVariables {
+
+	public static void ReportFolderCreator() {
+
+		// creating reports folder if not exists : As for every Run of this class it
+		// will Create the report
+		String projectPath = System.getProperty("user.dir");
+		projectPath = projectPath + "\\Reports";
+		File folder = new File(projectPath);
+		if (!folder.exists())
+			folder.mkdir();
+	}
+
 	/****
 	 * 
 	 * Method will handle excel(.xlsx or .xls)
 	 */
 	public static void ExcelHandler() throws IOException {
-
+		FrameworkClass.ReportFolderCreator();
 		reader = new BufferedReader(
 				new FileReader("C:\\Users\\Muthukumar\\eclipse-workspace\\Framework\\FrameWorkProperties.properties"));
 		property = new Properties();
@@ -216,59 +228,52 @@ public class FrameworkClass extends initialVariables {
 
 		{
 			strPath = strPath + "\\" + TCname;
-	
-			if (new File(strPath).exists()) 
-			{
+
+			if (new File(strPath).exists()) {
 				File fpath_sub = new File(strPath);
-				for(File file: fpath_sub.listFiles()) { 
-				    if (!file.isDirectory()) 
-				        file.delete();
+				for (File file : fpath_sub.listFiles()) {
+					if (!file.isDirectory())
+						file.delete();
 				}
 				File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 				File DestFile = new File(fpath_sub + "\\" + System.currentTimeMillis());
-				
-				FileHandler.copy(screenshotFile, DestFile);
-			}
-			else
-			{
-				new File(strPath).mkdir();
-				File fpath_sub = new File(strPath);
-				File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				File DestFile = new File(fpath_sub + "\\" + System.currentTimeMillis());
-				FileHandler.copy(screenshotFile, DestFile);
-			}
-			
-		
-		}
-		
-		else
-			{
-				fpath.mkdir();
-				strPath = strPath + "\\" + TCname;
-				new File(strPath).mkdir();
-				File fpath_sub = new File(strPath);
-				File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				File DestFile = new File(fpath_sub + "\\" + System.currentTimeMillis());
-				FileHandler.copy(screenshotFile, DestFile);
 
+				FileHandler.copy(screenshotFile, DestFile);
+			} else {
+				new File(strPath).mkdir();
+				File fpath_sub = new File(strPath);
+				File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+				File DestFile = new File(fpath_sub + "\\" + System.currentTimeMillis());
+				FileHandler.copy(screenshotFile, DestFile);
 			}
-		
+
+		}
+
+		else {
+			fpath.mkdir();
+			strPath = strPath + "\\" + TCname;
+			new File(strPath).mkdir();
+			File fpath_sub = new File(strPath);
+			File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			File DestFile = new File(fpath_sub + "\\" + System.currentTimeMillis());
+			FileHandler.copy(screenshotFile, DestFile);
+
+		}
 
 	}
 
-
-	public static void createHtml( int s3,String message) throws IOException {
+	public static void createHtml(int s3, String message) throws IOException {
 		String flg;
-		if(s3==0)
-			flg="Failed";
+		if (s3 == 0)
+			flg = "Failed";
 		else
-			 flg="Passed";
-		
-		String s1=Integer.toString(++GCounter);
-		String projectPath = System.getProperty("user.dir");
-		String fileName = "Muthu_"+StartTime+".html";
+			flg = "Passed";
 
-		String tempFile = projectPath+File.separator+"Reports"+ File.separator + fileName;
+		String s1 = Integer.toString(++GCounter);
+		String projectPath = System.getProperty("user.dir");
+		String fileName = "Muthu_" + StartTime + ".html";
+
+		String tempFile = projectPath + File.separator + "Reports" + File.separator + fileName;
 		File file = new File(tempFile);
 
 		if (file.exists()) {
@@ -300,14 +305,15 @@ public class FrameworkClass extends initialVariables {
 						+ "  border-collapse: collapse;\r\n" + "  width: 100%;\r\n" + "}\r\n" + "\r\n" + "td, th {\r\n"
 						+ "  border: 1px solid #dddddd;\r\n" + "  text-align: left;\r\n" + "  padding: 8px;\r\n"
 						+ "}\r\n" + "\r\n" + "th {\r\n" + "  background-color: #dddddd;\r\n" + "}");
-				doc.body().appendElement("h1").attr("align", "center").appendElement("font").attr("face", "verdana").attr("color", "green").text("Test Report");
+				doc.body().appendElement("h1").attr("align", "center").appendElement("font").attr("face", "verdana")
+						.attr("color", "green").text("Test Report");
 				Element table = doc.body().appendElement("table").attr("border", "1").attr("bordercolor", "#000000")
 						.attr("id", "muthu").attr("bgcolor", "#F5A9BC");
 				table.appendElement("tr").appendElement("th").text("TestId").appendElement("th").text("TestName")
 						.appendElement("th").text("TestResult").appendElement("th").text("Message");
 				// table.appendElement("tr").appendElement("td").text(s1).appendElement("tr").appendElement("th").text("TestName").appendElement("tr").appendElement("th").text("TestResult");
-				table.appendElement("tr").appendElement("td").text(s1).appendElement("td").text(tcName).appendElement("td")
-						.text(flg).appendElement("td").text(message);
+				table.appendElement("tr").appendElement("td").text(s1).appendElement("td").text(tcName)
+						.appendElement("td").text(flg).appendElement("td").text(message);
 
 				OutputStream outputStream = new FileOutputStream(file.getAbsoluteFile());
 				Writer writer = new OutputStreamWriter(outputStream);
@@ -319,6 +325,5 @@ public class FrameworkClass extends initialVariables {
 
 		}
 	}
-
 
 }

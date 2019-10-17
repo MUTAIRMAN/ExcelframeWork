@@ -9,6 +9,7 @@
           <include name="beforeClass"/>
           <include name="PostLogin"/>
           <include name="afterClass"/>
+          <include name="Login"/>
         </methods>
       </class> <!-- Muthu.Test.GmailFunctionality -->
     </classes>

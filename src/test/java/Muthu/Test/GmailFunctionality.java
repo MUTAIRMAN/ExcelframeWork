@@ -29,7 +29,7 @@ public class GmailFunctionality extends FrameworkClass {
 		waitdriver.until(ExpectedConditions.presenceOfElementLocated(FrameworkClass.getObj("objUserName", "Login")));
 		hashMapData = FrameworkClass.testDatahandler(tcName);
 		
-		driver.findElement(FrameworkClass.getObj("objUserName", "Login")).sendKeys(hashMapData.get("Name"));
+		driver.findElement(FrameworkClass.getObj("objU1serName", "Login")).sendKeys(hashMapData.get("Name"));
 
 		driver.findElement(FrameworkClass.getObj("objNext", "Login")).click();
 
@@ -44,6 +44,7 @@ public class GmailFunctionality extends FrameworkClass {
 		FrameworkClass.createHtml(1,"Nil");
 		}
 		catch(Exception e){
+			
 			FrameworkClass.createHtml(0,e.toString());
 		
 		}
@@ -77,8 +78,12 @@ public class GmailFunctionality extends FrameworkClass {
 	@BeforeClass
 	@Parameters("browser")
 	public void beforeClass(String browser) throws IOException, InterruptedException {
+		
+		
 		FrameworkClass.ExcelHandler();
+		
 		StartTime=System.currentTimeMillis();
+		
 		String strURL = property.getProperty("URL");
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver",
@@ -92,12 +97,8 @@ public class GmailFunctionality extends FrameworkClass {
 		}
 		driver.get(strURL);
 		waitdriver = new WebDriverWait(driver, 20);
-		//creating reports folder if not exists 
-		String projectPath = System.getProperty("user.dir");
-		projectPath = projectPath + "\\Reports";
-		File folder = new File(projectPath);
-		if(!folder.exists())
-		folder.mkdir();
+		
+		
 	}
 
 	@AfterClass
