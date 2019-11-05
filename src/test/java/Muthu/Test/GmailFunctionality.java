@@ -2,6 +2,7 @@ package Muthu.Test;
 
 import Muthu.Framework.*;
 
+import java.awt.AWTException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,73 +18,69 @@ import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.*;
 
+import com.google.common.base.Verify;
+
 public class GmailFunctionality extends FrameworkClass {
+
+
 	@Test
 	public void Login() throws InterruptedException, IOException {
 		try {
-			tcName=FrameworkClass.TCName();
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		waitdriver.until(ExpectedConditions.presenceOfElementLocated(FrameworkClass.getObj("objUserName", "Login")));
-		hashMapData = FrameworkClass.testDatahandler(tcName);
-		
-		driver.findElement(FrameworkClass.getObj("objU1serName", "Login")).sendKeys(hashMapData.get("Name"));
+			tcName = FrameworkClass.TCName();
+			hashMapData = FrameworkClass.testDatahandler(tcName);
 
-		driver.findElement(FrameworkClass.getObj("objNext", "Login")).click();
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			waitdriver
+					.until(ExpectedConditions.presenceOfElementLocated(FrameworkClass.getObj("objUserName", "Login")));
+			driver.findElement(FrameworkClass.getObj("objUserName", "Login")).sendKeys(hashMapData.get("Name"));
+			driver.findElement(FrameworkClass.getObj("objNext", "Login")).click();
+			waitdriver.until(ExpectedConditions.elementToBeClickable(FrameworkClass.getObj("objPassword", "Login")));
+			driver.findElement(FrameworkClass.getObj("objPassword", "Login")).sendKeys(hashMapData.get("Pwd"));
+			driver.findElement(FrameworkClass.getObj("objNext", "Login")).click();
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			FrameworkClass.ValidationScreenshot();
+			FrameworkClass.createHtml(1, "Nil");
+		} catch (Exception e) {
 
-		waitdriver.until(ExpectedConditions.elementToBeClickable(FrameworkClass.getObj("objPassword", "Login")));
+			FrameworkClass.createHtml(0, e.toString());
 
-		driver.findElement(FrameworkClass.getObj("objPassword", "Login")).sendKeys(hashMapData.get("Pwd"));
-		driver.findElement(FrameworkClass.getObj("objNext", "Login")).click();
-
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		FrameworkClass.ValidationScreenshot();
-		
-		FrameworkClass.createHtml(1,"Nil");
-		}
-		catch(Exception e){
-			
-			FrameworkClass.createHtml(0,e.toString());
-		
 		}
 	}
 
-
-
-	@Test(dependsOnMethods="Login")
+	@Test(dependsOnMethods = "Login")
 	public void PostLogin() throws InterruptedException, IOException {
-	
+
 		try {
-			tcName=FrameworkClass.TCName();
+			tcName = FrameworkClass.TCName();
+			hashMapData = FrameworkClass.testDatahandler(tcName);
 
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			waitdriver.until(
+					ExpectedConditions.presenceOfElementLocated(FrameworkClass.getObj("objGmailImage", "validate")));
+			driver.findElement(FrameworkClass.getObj("objPlus", "validate")).click();
+			waitdriver.until(ExpectedConditions.presenceOfElementLocated(FrameworkClass.getObj("objTo", "validate")));
+			driver.findElement(FrameworkClass.getObj("objTo", "validate")).sendKeys(hashMapData.get("Name"));
+			driver.findElement(FrameworkClass.getObj("objSub", "validate")).sendKeys(hashMapData.get("Subject"));
+			FrameworkClass.ValidationScreenshot();
+			FrameworkClass.createHtml(1, "Nil");
+		} catch (Exception e) {
+			FrameworkClass.createHtml(0, e.toString());
 
-		waitdriver.until(ExpectedConditions.presenceOfElementLocated(FrameworkClass.getObj("objGmailImage", "validate")));
-		hashMapData = FrameworkClass.testDatahandler(tcName);
-		driver.findElement(FrameworkClass.getObj("objPlus", "validate")).click();
-		waitdriver.until(ExpectedConditions.presenceOfElementLocated(FrameworkClass.getObj("objTo", "validate")));
-		driver.findElement(FrameworkClass.getObj("objTo", "validate")).sendKeys(hashMapData.get("Name"));
-		driver.findElement(FrameworkClass.getObj("objSub", "validate")).sendKeys(hashMapData.get("Subject"));
-		FrameworkClass.ValidationScreenshot();
-		FrameworkClass.createHtml(1,"Nil");
-	}
-	catch(Exception e){
-		FrameworkClass.createHtml(0,e.toString());
-	
-	}
+		}
 	}
 
 	@BeforeClass
 	@Parameters("browser")
 	public void beforeClass(String browser) throws IOException, InterruptedException {
-		
-		
+
 		FrameworkClass.ExcelHandler();
-		
-		StartTime=System.currentTimeMillis();
-		
+
+		StartTime = System.currentTimeMillis();
+
 		String strURL = property.getProperty("URL");
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver",
@@ -96,13 +93,14 @@ public class GmailFunctionality extends FrameworkClass {
 			driver = new InternetExplorerDriver();
 		}
 		driver.get(strURL);
+		driver.manage().window().maximize();
 		waitdriver = new WebDriverWait(driver, 20);
-		
-		
+
 	}
 
 	@AfterClass
 	public void afterClass() {
+		Verify.verify(globalFlag);
 		driver.quit();
 	}
 

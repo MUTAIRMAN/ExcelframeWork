@@ -1,5 +1,11 @@
 package Muthu.Framework;
 
+import java.awt.AWTException;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,9 +34,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.io.FileHandler;
 import org.testng.annotations.DataProvider;
 
@@ -148,24 +156,37 @@ public class FrameworkClass extends initialVariables {
 				break;
 			}
 		}
-
+		
+		
 		// code to choose the By
 
 		switch (cCount) {
 
 		case 1:
+			FrameworkClass.highlight(ByEle.id(objValue));
 			return ByEle.id(objValue);
 		case 2:
+			FrameworkClass.highlight(ByEle.name(objValue));
 			return ByEle.name(objValue);
 		case 3:
+			FrameworkClass.highlight(ByEle.xpath(objValue));
+
 			return ByEle.xpath(objValue);
 		case 4:
+			FrameworkClass.highlight(ByEle.linkText(objValue));
+
 			return ByEle.linkText(objValue);
 		case 5:
+			FrameworkClass.highlight(ByEle.partialLinkText(objValue));
+
 			return ByEle.partialLinkText(objValue);
 		case 6:
+			FrameworkClass.highlight(ByEle.tagName(objValue));
+
 			return ByEle.tagName(objValue);
 		case 7:
+			FrameworkClass.highlight(ByEle.className(objValue));
+
 			return ByEle.className(objValue);
 		default:
 			return null;
@@ -212,9 +233,29 @@ public class FrameworkClass extends initialVariables {
 	/**
 	 * 
 	 * @return Testcase Name by using the @test which is invoked
+	 * @throws AWTException 
+	 * @throws InterruptedException 
 	 */
-	public static String TCName() {
+	public static String TCName() throws AWTException, InterruptedException {
 		TCname = Thread.currentThread().getStackTrace()[2].getMethodName().toString();
+		 SystemTray tray = SystemTray.getSystemTray();
+
+	        //If the icon is a file
+	        Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+	        //Alternative (if the icon is on the classpath):
+	        //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
+
+	        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
+	        //Let the system resize the image if needed
+	        trayIcon.setImageAutoSize(true);
+	        //Set tooltip text for the tray icon
+	        trayIcon.setToolTip("System tray icon demo");
+	        tray.add(trayIcon);
+
+	        trayIcon.displayMessage(TCname, "TestCaseName", MessageType.INFO);
+	        Thread.sleep(2000);
+	        tray.remove(trayIcon);   
+
 		return TCname;
 	}
 
@@ -320,10 +361,31 @@ public class FrameworkClass extends initialVariables {
 				writer.write(doc.toString());
 				writer.close();
 			} catch (IOException e) {
+				globalFlag=false;
+
 				e.printStackTrace();
 			}
 
 		}
+	}
+	
+	public static void highlight(By Element)
+	{
+		JavascriptExecutor js=(JavascriptExecutor)driver; 
+		 
+		js.executeScript("arguments[0].setAttribute('style', 'border: thick solid #000000');", driver.findElement(Element));
+		 
+		try 
+		{
+		Thread.sleep(250);
+		} 
+		catch (InterruptedException e) {
+			globalFlag=false;
+		System.out.println(e.getMessage());
+		
+		} 
+		 
+		js.executeScript("arguments[0].setAttribute('style','border: solid 2px white');", driver.findElement(Element)); 
 	}
 
 }

@@ -34,5 +34,6 @@ public class initialVariables {
 	protected HashMap<String,String> hashMapData;
 	protected static int GCounter;
 	protected static long StartTime;
-	protected static String tcName; 
+	protected static String tcName;
+	protected static Boolean globalFlag=true;
 }
